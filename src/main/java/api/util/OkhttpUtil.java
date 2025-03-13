@@ -1,4 +1,4 @@
-package util;
+package api.base.util;
 
 import com.alibaba.fastjson2.JSONObject;
 import okhttp3.*;
@@ -18,8 +18,8 @@ import java.util.concurrent.TimeUnit;
 
 public class OkhttpUtil {
 
-    private final static String baseUrl = "http://服务ip:2531/v2/api";
-    private final static String token = "";
+    private final static String baseUrl = "http://192.168.1.226:2531/v2/api";
+    private final static String token = "0e5c86e1af5e43ecaa47aecb51b94062";
 
     public static OkHttpClient okHttpClient() {
         TrustManager[] trustManagers = buildTrustManagers();
