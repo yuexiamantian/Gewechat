@@ -1,4 +1,4 @@
-package api.base.util;
+package api.util;
 
 import com.alibaba.fastjson2.JSONObject;
 import okhttp3.*;
@@ -73,7 +73,7 @@ public class OkhttpUtil {
             if(baseUrl == null || "".equals(baseUrl)){
                 throw new RuntimeException("baseUrl 未配置");
             }
-            String res = json(baseUrl + route, header, param.toJSONString(), okHttpClient());
+            String res = post(baseUrl + route, header, param.toJSONString(), okHttpClient());
             System.out.println(res);
             JSONObject jsonObject = JSONObject.parse(res);
             if(jsonObject.getInteger("ret") == 200){
@@ -87,7 +87,7 @@ public class OkhttpUtil {
         }
     }
 
-    private static String json(String url, Map<String, Object> header, String json, OkHttpClient client) throws IOException {
+    public static String post(String url, Map<String, Object> header, String json, OkHttpClient client) throws IOException {
         // 创建一个请求 Builder
         Request.Builder builder = new Request.Builder();
         // 创建一个 request

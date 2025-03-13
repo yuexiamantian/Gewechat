@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="api.mapper.GewechatMessageMapper">
+
+    <insert id="insertIgnore" parameterType="api.message.GewechatMessage" useGeneratedKeys="true" keyProperty="id">
+        INSERT IGNORE INTO gewechat_message(type_name, appid, wxid, msg_id, from_user_name, to_user_name, msg_type,
+        content, status, img_status, img_buf_i_len, img_buf_buffer, msg_create_time, msg_source, push_content,
+        new_msg_id, msg_seq, data)
+        VALUES
+        (#{typeName},#{appid},#{wxid},#{msgId},#{fromUserName},#{toUserName},#{msgType},#{content},#{status},#{imgStatus},#{imgBufILen},#{imgBufBuffer},#{msgCreateTime},#{msgSource},#{pushContent},#{newMsgId},#{msgSeq},#{data})
+    </insert>
+</mapper>

@@ -1,7 +1,7 @@
-package api.base.base;
+package api.base;
 
 import com.alibaba.fastjson2.JSONObject;
-import api.base.util.OkhttpUtil;
+import api.util.OkhttpUtil;
 
 /**
  * 消息模块
