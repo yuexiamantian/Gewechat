@@ -16,8 +16,6 @@ public class GewechatBaseMessage<T> {
     /**
      * 消息类型名称
      * AddMsg 新消息
-     * ModContacts 好友通过验证及好友资料变更的通知 /群信息变更通知
-     * DelContacts 删除好友通知
      * Offline  掉线通知
      **/
     private String TypeName;

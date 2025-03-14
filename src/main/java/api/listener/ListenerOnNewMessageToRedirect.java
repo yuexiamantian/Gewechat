@@ -23,9 +23,6 @@ import java.util.regex.Pattern;
 
 @Component
 public class ListenerOnNewMessageToRedirect {
-    @Value("${gewechat.agentWxId:56286997303@chatroom}")
-    private String agentWxId;
-
     @Resource
     private GewechatMessageMapper gewechatMessageMapper;
 
@@ -60,8 +57,8 @@ public class ListenerOnNewMessageToRedirect {
         // 组装请求参数
         String appmsg = buildParam(gewechatMessage, referMsgContent);
 
-        // 转发到代理群
-        MessageApi.postAppMsg(message.getAppid(), agentWxId, appmsg);
+        // 转发回原问题群
+//        MessageApi.postAppMsg(message.getAppid(), agentWxId, appmsg);
     }
 
 

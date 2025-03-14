@@ -201,5 +201,4 @@ public class MessageApi {
         param.put("createTime", createTime);
         return OkhttpUtil.postJSON("/message/revokeMsg", param);
     }
-
 }
