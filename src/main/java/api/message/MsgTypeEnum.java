@@ -14,6 +14,7 @@ public enum MsgTypeEnum {
     //$.Data.MsgType=49 并且 解析$.Data.Content.string中的xml msg.appmsg.type=2001
     //更多消息结构详见 https://apifox.com/apidoc/shared-69ba62ca-cb7d-437e-85e4-6f3d3df271b1/doc-4801171
     COMPON(49, "组合消息"),
+    REFER(57, "引用消息"),
     SYSTEM(10002, "系统消息");
     private final Integer code;
     private final String desc;

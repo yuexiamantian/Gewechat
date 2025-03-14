@@ -102,8 +102,6 @@ public class GewechatNewMsg extends GewechatBaseMessage {
         gewechatMessage.setPushContent(this.getPushContent());
         gewechatMessage.setNewMsgId(this.getNewMsgId());
         gewechatMessage.setMsgSeq(this.getMsgSeq());
-        gewechatMessage.setContent(this.getContent());
-        gewechatMessage.setData(JSONObject.toJSONString(this));
         return gewechatMessage;
     }
 }
