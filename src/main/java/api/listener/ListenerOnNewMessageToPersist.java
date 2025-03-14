@@ -7,6 +7,7 @@ import api.mapper.GewechatMessageMapper;
 import api.message.GewechatMessage;
 import api.message.GewechatNewMsg;
 import api.message.MsgTypeEnum;
+import cn.hutool.core.util.XmlUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +18,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 @Component
@@ -55,6 +54,11 @@ public class ListenerOnNewMessageToPersist {
             po.setData(JSONObject.toJSONString(message.getData()));
             gewechatMessageMapper.insertIgnore(po);
 
+            // 如果是@运维的消息，直接回复收到
+            if (message.getContent().contains("@龙运智联运维")) {
+                autoOk(message);
+            }
+
             if (!agentWxId.equals(message.getFromUserName())) {
                 MsgTypeEnum msgTypeEnum = MsgTypeEnum.from(message.getMsgType());
                 if (Objects.nonNull(msgTypeEnum)) {
@@ -62,7 +66,7 @@ public class ListenerOnNewMessageToPersist {
                     switch (msgTypeEnum) {
                         case TEXT:
                             MessageApi.postText(message.getAppid(), agentWxId,
-                                    message.getMsgId() + ":" + fromWho + "\n" + content, "");
+                                    message.getMsgId() + ":" + fromWho + "\n" + content, "notify@all");
                             break;
                         case IMAGE:
                             MessageApi.forwardImage(message.getAppid(), agentWxId, content);
@@ -80,18 +84,33 @@ public class ListenerOnNewMessageToPersist {
                                                 "【引用】:"
                                                 + jsonObject.getByPath("msg.appmsg.refermsg.content", String.class)
                                                 + "\n\n"
-                                                + jsonObject.getByPath("msg.appmsg.title", String.class), "");
+                                                + jsonObject.getByPath("msg.appmsg.title", String.class), "notify@all");
                             } else {
                                 // 引用的非文本消息
                                 MessageApi.postText(message.getAppid(), agentWxId,
-                                        jsonObject.getByPath("msg.appmsg.title", String.class), "");
+                                        jsonObject.getByPath("msg.appmsg.title", String.class), "notify@all");
                             }
-
                             break;
                         default: // do nothing
                     }
                 }
             }
         }
+    }
+
+    private void autoOk(GewechatNewMsg message) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("title","收到，请稍等");
+        map.put("type", 57);
+        map.put("refermsg", new HashMap<String, Object>() {
+            {
+                put("fromusr", message.getFromUserName());
+                put("chatusr", "wxid_k83tqco1jng522");
+                put("svrid", message.getNewMsgId());
+                put("type", 1);
+            }
+        });
+        String appmsg = XmlUtil.mapToXmlStr(map, "appmsg");
+        MessageApi.postAppMsg(message.getAppid(), message.getFromUserName(), appmsg);
     }
 }
