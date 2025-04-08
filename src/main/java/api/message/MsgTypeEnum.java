@@ -7,6 +7,7 @@ public enum MsgTypeEnum {
 
     TEXT(1, "文本消息"),
     IMAGE(3, "图片消息"),
+    SHIPINHAO(4, "视频号"),
     VOICE(34, "语音消息"),
     VIDEO(43, "视频消息"),
     EMOTION(47, "表情消息"),

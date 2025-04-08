@@ -18,8 +18,8 @@ import java.util.concurrent.TimeUnit;
 
 public class OkhttpUtil {
 
-    private final static String baseUrl = "http://192.168.1.226:2531/v2/api";
-    private final static String token = "0e5c86e1af5e43ecaa47aecb51b94062";
+    private final static String baseUrl = "http://192.168.1.226:2631/v2/api";
+    private final static String token = "d67b4be79e714067a64c4becfb1fb3bb";
 
     public static OkHttpClient okHttpClient() {
         TrustManager[] trustManagers = buildTrustManagers();
